@@ -1,0 +1,511 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Untitled Document</title>
+        <style type="text/css">
+            body {
+                font-size: 10px;
+            }
+            
+            .teamList {
+                #float: left;
+            }
+        </style>
+        <script type="text/javascript" src="jquery-1.4.2.min.js">
+        </script>
+        <script type="text/javascript" src="json2.js">
+        </script>
+        <script type="text/javascript">
+        	/* BEGIN: Team Object */
+            function Team(name, rank){
+                this.name = name;
+                this.preTournamentRank = rank;
+                
+                return this;
+            }
+            
+            Team.prototype.getRank = function(){
+                if (!this.rank) {
+          			//Place to put aditional logic
+                    this.rank = this.preTournamentRank
+                }
+                
+                return this.rank;
+            }
+            /* END: Team Object */
+			
+			/* BEGIN: History Data */
+            function History(){
+            
+            }
+            
+			//This year's teams
+			History.current = {};
+            History.current.teamsA = [new Team('Kansas', 1), new Team('Austin Peay', 16), new Team('Colorado', 8), new Team('Connecticut', 9), new Team('Maryland', 5), new Team('S Dakota St', 12), new Team('California', 4), new Team('Hawaii', 13), new Team('Arizona', 6), new Team('Vanderbilt', 11), new Team('Miami FL', 3), new Team('Bualo', 14), new Team('Iowa', 7), new Team('Temple', 10), new Team('Villanova', 2), new Team('UNC Asheville', 15)];
+            History.current.teamsB = [new Team('Oregon', 1), new Team('Holy Cross', 16), new Team('St Joseph\'s PA', 8), new Team('Cincinnati', 9), new Team('Baylor', 5), new Team('Yale', 12), new Team('Duke', 4), new Team('UNC Wilmington', 13), new Team('Texas', 6), new Team('Northern Iowa', 11), new Team('Texas A&M', 3), new Team('Green Bay', 14), new Team('Oregon St', 7), new Team('VA Commonwealth', 10), new Team('Oklahoma', 2), new Team('CS Bakersfield', 15)];
+            History.current.teamsC = [new Team('North Carolina', 1), new Team('FL Gulf Coast', 16), new Team('USC', 8), new Team('Providence', 9), new Team('Indiana', 5), new Team('Chattanooga', 12), new Team('Kentucky', 4), new Team('Stony Brook', 13), new Team('Notre Dame', 6), new Team('Michigan', 11), new Team('West Virginia', 3), new Team('SF Austin', 14), new Team('Wisconsin', 7), new Team('Pittsburgh', 10), new Team('Xavier', 2), new Team('Weber St', 15)];
+            History.current.teamsD = [new Team('Virginia', 1), new Team('Hampton', 16), new Team('Texas Tech', 8), new Team('Butler', 9), new Team('Purdue', 5), new Team('Little Rock', 12), new Team('Iowa St', 4), new Team('Iona', 13), new Team('Seton Hall', 6), new Team('Gonzaga', 11), new Team('Utah', 3), new Team('Fresno St', 14), new Team('Dayton', 7), new Team('Syracuse', 10), new Team('Michigan St', 2), new Team('Tennessee St', 15)];
+
+            //History of Final 4s
+			History.tournament = {};
+
+            History.tournament.finalFour2015 = {
+                A: 1,
+                B: 1,
+                C: 7,
+                D: 1
+            }
+
+            History.tournament.finalFour2014 = {
+                A: 1,
+                B: 7,
+                C: 2,
+                D: 8
+            }
+
+            History.tournament.finalFour2013 = {
+                A: 1,
+                B: 9,
+                C: 4,
+                D: 4
+            }
+
+            History.tournament.finalFour2012 = {
+                A: 1,
+                B: 4,
+                C: 2,
+                D: 2
+            }
+
+            History.tournament.finalFour2011 = {
+                A: 4,
+                B: 3,
+                C: 11,
+                D: 8
+            }
+
+            History.tournament.finalFour2010 = {
+                A: 5,
+                B: 5,
+                C: 2,
+                D: 1
+            }
+
+            History.tournament.finalFour2009 = {
+                A: 2,
+                B: 1,
+                C: 3,
+                D: 1
+            }
+			
+            History.tournament.finalFour2008 = {
+                A: 1,
+                B: 1,
+                C: 1,
+                D: 1
+            }
+            
+            History.tournament.finalFour2007 = {
+                A: 1,
+                B: 2,
+                C: 2,
+                D: 1
+            }
+            
+            History.tournament.finalFour2006 = {
+                A: 4,
+                B: 2,
+                C: 3,
+                D: 11
+            }
+            
+            History.tournament.finalFour2005 = {
+                A: 1,
+                B: 4,
+                C: 1,
+                D: 5
+            }
+            
+            History.tournament.finalFour2004 = {
+                A: 2,
+                B: 3,
+                C: 1,
+                D: 2
+            }
+            
+            History.tournament.finalFour2003 = {
+                A: 3,
+                B: 1,
+                C: 3,
+                D: 2
+            }
+            
+            History.tournament.finalFour2002 = {
+                A: 1,
+                B: 1,
+                C: 5,
+                D: 2
+            }
+            History.tournament.finalFour2001 = {
+                A: 1,
+                B: 3,
+                C: 1,
+                D: 2
+            }
+            History.tournament.finalFour2000 = {
+                A: 5,
+                B: 8,
+                C: 1,
+                D: 8
+            }
+            History.tournament.finalFour1999 = {
+                A: 1,
+                B: 1,
+                C: 4,
+                D: 1
+            }
+            History.tournament.finalFour1998 = {
+                A: 1,
+                B: 3,
+                C: 2,
+                D: 3
+            }
+            History.tournament.finalFour1997 = {
+                A: 1,
+                B: 4,
+                C: 1,
+                D: 1
+            }
+            History.tournament.finalFour1996 = {
+                A: 1,
+                B: 1,
+                C: 5,
+                D: 4
+            }
+            History.tournament.finalFour1995 = {
+                A: 4,
+                B: 1,
+                C: 2,
+                D: 2
+            }
+            History.tournament.finalFour1994 = {
+                A: 3,
+                B: 2,
+                C: 1,
+                D: 2
+            }
+            History.tournament.finalFour1993 = {
+                A: 1,
+                B: 2,
+                C: 1,
+                D: 1
+            }
+            History.tournament.finalFour1992 = {
+                A: 1,
+                B: 2,
+                C: 6,
+                D: 4
+            }
+            History.tournament.finalFour1991 = {
+                A: 1,
+                B: 3,
+                C: 2,
+                D: 1
+            }
+            History.tournament.finalFour1990 = {
+                A: 3,
+                B: 4,
+                C: 4,
+                D: 1
+            }
+
+            History.tournament.teams = [new Team('', 1), new Team('', 16), new Team('', 8), new Team('', 9), new Team('', 5), new Team('', 12), new Team('', 4), new Team('', 13), new Team('', 6), new Team('', 11), new Team('', 3), new Team('', 14), new Team('', 7), new Team('', 10), new Team('', 2), new Team('', 15)];
+
+			/* BEGIN: Hochard Simulation Service */
+			
+            function HochardSimulation(){
+            }
+            
+            HochardSimulation.matchRounds = 1; //How many rounds of points gathering for game
+            HochardSimulation.offsetReducer = 2; //Help out low ranked teams
+            HochardSimulation.defaultRandomMax = 3; //Random spand
+            
+			//Function to get a random number
+            HochardSimulation.random = function(max){
+                return Math.floor(Math.random() * max + 1);
+            };
+            
+			//Simulates a game between 2 teams
+            HochardSimulation.simulateMatch = function(team1, team2){
+				//Figure out which team is higher ranked
+                var higherRankedTeam = '';
+                var lowerRankedTeam = '';
+                
+                if (team1.getRank() < team2.getRank()) {
+                    higherRankedTeam = team1;
+                    lowerRankedTeam = team2;
+                }
+                else {
+                    higherRankedTeam = team2;
+                    lowerRankedTeam = team1;
+                }
+                
+				//Set scoring parameters
+                var lowerRankedOffset = (lowerRankedTeam.rank - higherRankedTeam.rank + 1) / HochardSimulation.offsetReducer;
+                
+				//Simulate game
+                var higherRankedTeamScore = 0;
+                var lowerRankedTeamScore = 0;
+                for (var i = 0; i < HochardSimulation.matchRounds; i++) {
+                    higherRankedTeamScore = higherRankedTeamScore + (10 - HochardSimulation.random(HochardSimulation.defaultRandomMax));
+                    lowerRankedTeamScore = lowerRankedTeamScore + (10 - HochardSimulation.random(HochardSimulation.defaultRandomMax + lowerRankedOffset));
+                }
+                
+				//Determine winner
+                var winningTeam = '';
+                var losingTeam = '';
+                
+                if (higherRankedTeamScore >= lowerRankedTeamScore) {
+                    winningTeam = {
+                        team: higherRankedTeam,
+                        score: higherRankedTeamScore
+                    };
+                    losingTeam = {
+                        team: lowerRankedTeam,
+                        score: lowerRankedTeamScore
+                    };
+                }
+                else {
+                    winningTeam = {
+                        team: lowerRankedTeam,
+                        score: lowerRankedTeamScore
+                    };
+                    losingTeam = {
+                        team: higherRankedTeam,
+                        score: higherRankedTeamScore
+                    };
+                }
+                
+                return {
+                    winningTeam: winningTeam,
+                    losingTeam: losingTeam
+                };
+            };
+            
+			//Object used for simulation parameters
+            function MatchRound(minOrWorst){
+                this.matchRound = 0;
+                this.offsetReducer = 0;
+                this.defaultRandomMax = 0;
+                
+                this.avg = (!minOrWorst || minOrWorst === false) ? 0 : 5;
+                
+                return this;
+            }
+            
+            var run_onClick = function(){
+                var simulateRounds = 100;
+                var minMatchRounds = 1;
+                var maxMatchRounds = 10;
+                var minOffsetReducer = 1;
+                var maxOffsetReducer = 3;
+                var minDefaultRandomMax = 1;
+                var maxDefaultRandomMax = 3;
+                
+                var worstMatchRound = new MatchRound(true);
+                var avgMatchRound = new MatchRound();
+                var bestMatchRound = new MatchRound();
+                
+                for (var i = minMatchRounds; i <= maxMatchRounds; i++) {
+                    for (var j = minOffsetReducer; j <= maxOffsetReducer; j++) {
+                        for (var k = minDefaultRandomMax; k <= maxDefaultRandomMax; k++) {
+                            var result = runYearTestRoutine(simulateRounds, i, j, k);
+                            
+                            if (result.worst < worstMatchRound.avg) {
+                                worstMatchRound.avg = result.worst;
+                                worstMatchRound.matchRound = i;
+                                worstMatchRound.offsetReducer = j;
+                                worstMatchRound.defaultRandomMax = k;
+                            }
+                            
+                            if (result.avg > avgMatchRound.avg) {
+                                avgMatchRound.avg = result.avg;
+                                avgMatchRound.matchRound = i;
+                                avgMatchRound.offsetReducer = j;
+                                avgMatchRound.defaultRandomMax = k;
+                            }
+                            
+                            if (result.best > bestMatchRound.avg) {
+                                bestMatchRound.avg = result.best;
+                                bestMatchRound.matchRound = i;
+                                bestMatchRound.offsetReducer = j;
+                                bestMatchRound.defaultRandomMax = k;
+                            }
+                        }
+                    }
+                }
+                
+                $('#results').append('<br />Worst: ' + JSON.stringify(worstMatchRound) + getRunYearTestRoutineButton(simulateRounds, worstMatchRound.matchRound, worstMatchRound.offsetReducer, worstMatchRound.defaultRandomMax) + getRunYearTestButton(worstMatchRound.matchRound, worstMatchRound.offsetReducer, worstMatchRound.defaultRandomMax) + getRunBracketButton(worstMatchRound.matchRound, worstMatchRound.offsetReducer, worstMatchRound.defaultRandomMax));
+                $('#results').append('<br />Avg: ' + JSON.stringify(avgMatchRound) + getRunYearTestRoutineButton(simulateRounds, avgMatchRound.matchRound, avgMatchRound.offsetReducer, avgMatchRound.defaultRandomMax) + getRunYearTestButton(avgMatchRound.matchRound, avgMatchRound.offsetReducer, avgMatchRound.defaultRandomMax) + getRunBracketButton(avgMatchRound.matchRound, avgMatchRound.offsetReducer, avgMatchRound.defaultRandomMax));
+                $('#results').append('<br />BestAvg: ' + JSON.stringify(bestMatchRound) + getRunYearTestRoutineButton(simulateRounds, bestMatchRound.matchRound, bestMatchRound.offsetReducer, bestMatchRound.defaultRandomMax) + getRunYearTestButton(bestMatchRound.matchRound, bestMatchRound.offsetReducer, bestMatchRound.defaultRandomMax) + getRunBracketButton(bestMatchRound.matchRound, bestMatchRound.offsetReducer, bestMatchRound.defaultRandomMax));
+            };
+            
+			/* BEGIN: Buttons */
+			
+            var getRunYearTestRoutineButton = function(simulateRounds, matchRounds, offsetReducer, defaultRadomMax){
+                return '<input type="button" value="Simulate This" onclick="runYearTestRoutine(' + simulateRounds + ',' + matchRounds + ',' + offsetReducer + ',' + defaultRadomMax + ',true)" />';
+            }
+            
+            var getRunYearTestButton = function(matchRounds, offsetReducer, defaultRadomMax){
+                return '<input type="button" value="Simulate Years" onclick="runYearTestRoutine(' + 1 + ',' + matchRounds + ',' + offsetReducer + ',' + defaultRadomMax + ',false,true)" />';
+            }
+            
+			var getRunBracketButton = function(matchRounds, offsetReducer, defaultRadomMax){
+				return '<input type="button" value="Run Bracket" onclick="runBracket(' + matchRounds + ',' + offsetReducer + ',' + defaultRadomMax + ')" />';
+			}
+			
+			/* END: Buttons */
+			
+			var runBracket = function(matchRounds, offsetReducer, defaultRadomMax){
+				HochardSimulation.matchRounds = matchRounds;
+                HochardSimulation.offsetReducer = offsetReducer;
+                HochardSimulation.defaultRandomMax = defaultRadomMax;
+				
+				$('#resultsA').html('');
+				$('#resultsB').html('');
+				$('#resultsC').html('');
+				$('#resultsD').html('');
+				$('#resultsE').html('');
+				
+				var winnerA = runRounds(1, History.current.teamsA, 'resultsA');
+				var winnerB = runRounds(1, History.current.teamsB, 'resultsB');
+				var winnerC = runRounds(1, History.current.teamsC, 'resultsC');
+				var winnerD = runRounds(1, History.current.teamsD, 'resultsD');
+				var winner = runRounds(1, [winnerA, winnerB, winnerC, winnerD], 'resultsE');
+			}
+			
+            var runYearTestRoutine = function(simulateRounds, matchRounds, offsetReducer, defaultRadomMax, writeToScreen, writeYearToScreen){
+                HochardSimulation.matchRounds = matchRounds;
+                HochardSimulation.offsetReducer = offsetReducer;
+                HochardSimulation.defaultRandomMax = defaultRadomMax;
+                
+                var total = 0;
+                var best = 0;
+                var worst = 5;
+                
+                for (var i = 0; i < simulateRounds; i++) {
+                    var result = runYearTest(writeYearToScreen);
+                    total += result;
+                    
+                    if (result > best) {
+                        best = result;
+                    }
+                    
+                    if (result < worst) {
+                        worst = result;
+                    }
+                }
+                
+                var returnResult = {
+                    worst: worst,
+                    avg: (total / simulateRounds),
+                    best: best
+                };
+                
+                if (writeToScreen && writeToScreen === true) {
+                    $('#results').append('<br /><br />' + JSON.stringify(returnResult));
+                }
+                
+                return returnResult;
+            }
+            
+            var runYearTest = function(writeToScreen){
+                var total = 0;
+                var startYear = 1990;
+                var endYear = 2015;
+                
+                for (var year = startYear; year <= endYear; year++) {
+                    var result = runYear(year);
+                    total += result;
+					if (writeToScreen && writeToScreen === true) {
+						$('#results').append('<br />Year: ' + year + ' Correct: ' + result);
+					}
+                }
+                
+                return (total / (endYear - startYear + 1));
+            }
+            
+            var runYear = function(year, appendResultsBool){
+                var winningTeamA = runRounds(1, History.tournament.teams);
+                var winningTeamB = runRounds(1, History.tournament.teams);
+                var winningTeamC = runRounds(1, History.tournament.teams);
+                var winningTeamD = runRounds(1, History.tournament.teams);
+                
+                var correct = 0;
+                if (winningTeamA.rank === History.tournament['finalFour' + year].A) {
+                    correct += 1
+                }
+                if (winningTeamB.rank === History.tournament['finalFour' + year].B) {
+                    correct += 1
+                }
+                if (winningTeamC.rank === History.tournament['finalFour' + year].C) {
+                    correct += 1
+                }
+                if (winningTeamD.rank === History.tournament['finalFour' + year].D) {
+                    correct += 1
+                }
+                
+                if (appendResultsBool && appendResultsBool === true) {
+                    $('#results').append('<br />' + year + ' Correct picks: ' + correct);
+                }
+                
+                return correct;
+            };
+            
+            var runRounds = function(roundIndex, teams, divId){
+                if (divId) {
+                    $('#' + divId).append('<br /><br />Round' + roundIndex + '<br />');
+                }
+                if (teams.length > 1) {
+                    var winningTeams = [];
+                    
+                    for (var i = 0; i < teams.length; i += 2) {
+                        if (divId) {
+                            $('#' + divId).append(teams[i].name + ',');
+                            $('#' + divId).append(teams[i + 1].name + ',');
+                        }
+                        var matchResults = HochardSimulation.simulateMatch(teams[i], teams[i + 1]);
+                        
+                        winningTeams.push(matchResults.winningTeam.team);
+                    }
+                    
+                    return runRounds(roundIndex += 1, winningTeams, divId);
+                }
+                else {
+                    if (divId) {
+                        $('#' + divId).append(teams[0].name);
+                    }
+                    return teams[0];
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <input type="button" value="Simulate" onclick="run_onClick()"/>
+        <br style="clear: both;"/>
+        <div id="results">
+        </div>
+		<br style="clear: both;"/>
+		<div id="resultsA" class="teamList">
+        </div>
+        <div id="resultsB" class="teamList">
+        </div>
+        <div id="resultsC" class="teamList">
+        </div>
+        <div id="resultsD" class="teamList">
+        </div>
+		<div id="resultsE" class="teamList">
+        </div>
+    </body>
+</html>
